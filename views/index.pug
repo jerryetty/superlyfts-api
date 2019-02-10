@@ -1,0 +1,9 @@
+extends layout
+
+block content
+  h1= title
+  hr
+  ul
+    each item in data
+      li 
+        a(href='/api/v1'+item.endpoint) #{item.name}
