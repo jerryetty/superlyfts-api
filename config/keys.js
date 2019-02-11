@@ -7,7 +7,7 @@ module.exports = {
     apiKey: 'AIzaSyBS_66b7XnHa2Y2ISXgZWS3POYSK7k7O4E'
   },
   mongodb: {
-    dbURI: 'mongodb+srv://jerry:@cluster0-x2c7h.mongodb.net/admin'
+    dbURI: 'mongodb+srv://jerry:1121pass@cluster0-x2c7h.mongodb.net/superlyfts'
   },
   session: {
     cookieKey: '7758bf77493skb377sb3h21045'
