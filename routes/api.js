@@ -6,6 +6,7 @@ var DriverController = require('../controllers/DriverController.js')
 var TripController = require('../controllers/TripController.js')
 var UserController = require('../controllers/UserController.js')
 var WalletController = require('../controllers/WalletController.js')
+var BookingController = require('../controllers/BookingController.js')
 
 /* GET home page. */
 router.get('/', Index.index)
@@ -101,7 +102,12 @@ router.get('/user/', UserController.list)
 /*
  * GET single user
  */
-router.get('/user/:id', UserController.show)
+router.get('/user/:id', UserController.getByID)
+
+/*
+ * GET user by googleId
+ */
+router.get('/user/gid/:googleId', UserController.getByGoogleId)
 
 /*
  * GET user wallet
@@ -109,9 +115,14 @@ router.get('/user/:id', UserController.show)
 router.get('/user/:user_id/wallet', WalletController.list)
 
 /*
+ * GET user trips
+ */
+router.get('/user/:user_id/trips', UserController.trips)
+
+/*
  * GET Check if User is Driver
  */
-router.get('/user/:id/isDriver', UserController.isDriver)
+router.get('/user/:user_id/isDriver', UserController.isDriver)
 
 /*
  * POST user
@@ -154,5 +165,30 @@ router.put('/wallet/:id', WalletController.update)
  * DELETE wallet
  */
 router.delete('/wallet/:id', WalletController.remove)
+
+/*
+ * GET
+ */
+router.get('/book/', BookingController.list)
+
+/*
+ * GET
+ */
+router.get('/book/:id', BookingController.show)
+
+/*
+ * POST
+ */
+router.post('/book/', BookingController.create)
+
+/*
+ * PUT
+ */
+router.put('/book/:id', BookingController.update)
+
+/*
+ * DELETE
+ */
+router.delete('/book/:id', BookingController.remove)
 
 module.exports = router

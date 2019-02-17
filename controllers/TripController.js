@@ -53,6 +53,13 @@ module.exports = {
               error: err
             })
           }
+
+          if (!Trips.length) {
+            return res.status(404).json({
+              message: 'No trips to that destination'
+            })
+          }
+
           return res.json(Trips)
         })
     }
@@ -101,7 +108,16 @@ module.exports = {
           error: err
         })
       }
-      return res.status(201).json(Trip)
+      var response = {
+        date: Trip.date,
+        origin: Trip.origin,
+        destination: Trip.destination,
+        available_seats: Trip.available_seats,
+        luggage: Trip.luggage,
+        constraints: Trip.constraints,
+        car: { id: Trip.car }
+      }
+      return res.status(201).json(response)
     })
   },
 
