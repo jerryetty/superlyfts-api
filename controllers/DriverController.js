@@ -63,7 +63,14 @@ module.exports = {
           error: err
         })
       }
-      return res.status(201).json(Driver)
+      var response = {
+        user: { id: Driver.user },
+        active: Driver.active,
+        rating: Driver.rating,
+        driving_permit_number: Driver.driving_permit_number,
+        driving_permit_photo: Driver.driving_permit_photo
+      }
+      return res.status(201).json(response)
     })
   },
 

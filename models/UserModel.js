@@ -12,7 +12,7 @@ var UserSchema = new Schema({
   },
   'telephone': {
     type: String,
-    required: true
+    required: false
   },
   'googleID': {
     type: String,
@@ -20,35 +20,35 @@ var UserSchema = new Schema({
   },
   'id_number': {
     type: String,
-    required: true
+    required: false
   },
   'next_of_kin_name': {
     type: String,
-    required: true
+    required: false
   },
   'next_of_kin_tel': {
     type: String,
-    required: true
+    required: false
   },
   'avatar': {
     type: String,
-    required: true
+    required: false
   },
   'active': {
     type: Boolean,
-    required: true
+    required: false
   },
   'gender': {
     type: String,
-    required: true
+    required: false
   },
   'date_joined': {
     type: Date,
-    required: true
+    required: false
   },
   'rating': {
     type: Number,
-    required: true
+    required: false
   }
 })
 

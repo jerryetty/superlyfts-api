@@ -5,15 +5,17 @@ var DriverSchema = new Schema({
   'user': {
     type: Schema.Types.ObjectId,
     ref: 'User',
-    required: true
+    required: false
   },
   'active': {
     type: Boolean,
-    required: true
+    required: false,
+    default: false
   },
   'rating': {
     type: Number,
-    required: true
+    required: false,
+    default: 5
   },
   'driving_permit_number': {
     type: String,

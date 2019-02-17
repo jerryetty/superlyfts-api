@@ -64,7 +64,16 @@ module.exports = {
           error: err
         })
       }
-      return res.status(201).json(Car)
+      var response = {
+        driver: { id: Car.driver },
+        licence_plate: Car.licence_plate,
+        model: Car.model,
+        type: Car.type,
+        number_of_seats: Car.number_of_seats,
+        insurance_doc: Car.insurance_doc
+
+      }
+      return res.status(201).json(response)
     })
   },
 

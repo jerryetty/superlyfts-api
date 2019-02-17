@@ -1,5 +1,7 @@
 var UserModel = require('../models/UserModel.js')
 var DriverModel = require('../models/DriverModel')
+// var TripModel = require('../models/TripModel')
+var BookingModel = require('../models/BookingModel')
 /**
  * UserController.js
  *
@@ -11,9 +13,9 @@ module.exports = {
    * Check if User is a Driver
    */
   isDriver: function (req, res, next) {
-    var userID = req.params.id
-    DriverModel.find({ user: userID })
-      .select('active')
+    var userID = req.params.user_id
+    DriverModel.findOne({ user: userID })
+      .select('id')
       .exec(function (err, Driver) {
         if (err) {
           return res.status(500).json({
@@ -22,10 +24,54 @@ module.exports = {
           })
         }
         if (Driver) {
-          return res.json(Driver)
+          return res.status(200).json(Driver)
         } else {
-          return res.json({ Message: 'User is not a driver' })
+          return res.status(404).json({ isDriver: false, Message: 'User is not a driver' })
         }
+      })
+  },
+
+  /**
+   * Get User Trips
+  */
+  trips: function (req, res, next) {
+    var id = req.params.user_id
+    var status = req.param('status')
+    BookingModel.find({ user: id, status: status })
+      .populate({
+        path: 'user',
+        select: ['name']
+      })
+      .populate({
+        path: 'trip',
+        populate: {
+          path: 'car',
+          populate: {
+            path: 'driver',
+            select: ['user', 'rating'],
+            populate: {
+              path: 'user',
+              select: ['name']
+            }
+          }
+        }
+      })
+
+      .exec(function (err, Trips) {
+        if (err) {
+          return res.status(500).json({
+            message: 'Error when getting Trip.',
+            error: err
+          })
+        }
+
+        if (!Trips.length) {
+          return res.status(404).json({
+            message: 'You have not booked any trips'
+          })
+        }
+
+        return res.json(Trips)
       })
   },
 
@@ -45,12 +91,29 @@ module.exports = {
       })
   },
 
-  /**
-     * UserController.show()
-     */
-  show: function (req, res) {
+  // Get User by ID
+  getByID: function (req, res) {
     var id = req.params.id
     UserModel.findOne({ _id: id }, function (err, User) {
+      if (err) {
+        return res.status(500).json({
+          message: 'Error when getting User.',
+          error: err
+        })
+      }
+      if (!User) {
+        return res.status(404).json({
+          message: 'No such User'
+        })
+      }
+      return res.json(User)
+    })
+  },
+
+  // Get User by GoogleID
+  getByGoogleId: function (req, res) {
+    var googleId = req.params.googleId
+    UserModel.findOne({ googleID: googleId }, function (err, User) {
       if (err) {
         return res.status(500).json({
           message: 'Error when getting User.',
