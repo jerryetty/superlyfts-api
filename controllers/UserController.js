@@ -9,9 +9,8 @@ var BookingModel = require('../models/BookingModel')
  */
 module.exports = {
 
-  /**
-   * Check if User is a Driver
-   */
+  // Check if User is a Driver
+
   isDriver: function (req, res, next) {
     var userID = req.params.user_id
     DriverModel.findOne({ user: userID })

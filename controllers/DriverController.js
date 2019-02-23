@@ -1,4 +1,5 @@
 var DriverModel = require('../models/DriverModel.js')
+var CarModel = require('../models/CarModel.js')
 
 /**
  * DriverController.js
@@ -6,10 +7,26 @@ var DriverModel = require('../models/DriverModel.js')
  * @description :: Server-side logic for managing Drivers.
  */
 module.exports = {
+  // Get Cars for a Driver
+  getCars: function (req, res) {
+    var id = req.params.id
+    CarModel.find({ driver: id })
+      .populate({ path: 'driver',
+        populate: {
+          path: 'user'
+        } })
+      .exec(function (err, Car) {
+        if (err) {
+          return res.status(500).json({
+            message: 'Error when getting Driver.',
+            error: err
+          })
+        }
+        return res.json(Car)
+      })
+  },
 
-  /**
-     * DriverController.list()
-     */
+  // Get all Drivers
   list: function (req, res) {
     DriverModel.find(function (err, Drivers) {
       if (err) {
